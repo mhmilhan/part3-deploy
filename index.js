@@ -79,17 +79,17 @@ app.post("/api/persons", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: "unknown endpoint" });
+const unknownEndpoint = (req, res) => {
+  res.status(404).send({ error: "unknown endpoint" });
 };
 
 app.use(unknownEndpoint);
 
-const errorHandler = (error, request, response, next) => {
+const errorHandler = (error, req, res, next) => {
   console.error(error.message);
 
   if (error.name === "CastError") {
-    return response.status(400).send({ error: "malformatted id" });
+    return res.status(400).send({ error: "malformatted id" });
   }
   next(error);
 };
